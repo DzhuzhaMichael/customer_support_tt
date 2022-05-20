@@ -3,7 +3,8 @@ package service.impl;
 import service.DataValidateService;
 
 public class DataValidateServiceImpl implements DataValidateService {
-    private static final String DATE_PATTERN = "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$";
+    private static final String DATE_PATTERN = "^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[012])[-/.](19|20)\\d\\d$";
+    //private static final String DATE_PATTERN  = "^(0?[1-9]|[1|2]\\d|3[0|1])[./-](0?[1-9]|1[0-2])[./-](\\d{4}|\\d{2})$";
 
     @Override
     public boolean isValidServiceInformation(String serviceId) {
@@ -36,7 +37,7 @@ public class DataValidateServiceImpl implements DataValidateService {
         if (questionTypeId.chars().allMatch(Character::isDigit)
                 && categoryId.chars().allMatch(Character::isDigit)) {
             return Integer.parseInt(questionTypeId) > 0 && Integer.parseInt(questionTypeId) <= 10
-                    && Integer.parseInt(categoryId) > 0 && Integer.parseInt(categoryId) < 20;
+                    && Integer.parseInt(categoryId) > 0 && Integer.parseInt(categoryId) <= 20;
         }
         return false;
     }

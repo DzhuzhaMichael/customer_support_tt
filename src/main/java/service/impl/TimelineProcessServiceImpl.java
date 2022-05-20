@@ -46,7 +46,7 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
 
     private Timeline processServiceInformation(String serviceInformation, Timeline timeline) {
         if (serviceInformation.isEmpty()) {
-            throw new DataProcessingException("Service information is empty");
+            throw new DataProcessingException("Timeline service information is empty");
         }
         String[] serviceArray = serviceInformation.split(SIGN_TO_SPLIT_ELEMENT);
         if (serviceArray.length == 1) {
@@ -54,7 +54,8 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
                 timeline.setServiceId(Integer.parseInt(serviceArray[SERVICE_ID_INDEX]));
                 timeline.setServiceVariationId(DEFAULT_VALUE);
             } else {
-                throw new DataProcessingException("Service information should contain service_id (value from 1 to 10)");
+                throw new DataProcessingException("Timeline service information should contain service_id "
+                        + "(value from 1 to 10)");
             }
         } else if (serviceArray.length == 2) {
             if (dataValidateService.isValidServiceInformation(serviceArray[SERVICE_ID_INDEX],
@@ -62,11 +63,11 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
                 timeline.setServiceId(Integer.parseInt(serviceArray[SERVICE_ID_INDEX]));
                 timeline.setServiceVariationId(Integer.parseInt(serviceArray[SERVICE_VARIATION_INDEX]));
             } else {
-                throw new DataProcessingException("Service information should contain service_id (value from 1 to 10) "
+                throw new DataProcessingException("Timeline service information should contain service_id (value from 1 to 10) "
                         + "and service_variation_id(value from 1 to 3)");
             }
         } else {
-                throw new DataProcessingException("Service information has invalid format");
+                throw new DataProcessingException("Timeline service information has invalid format");
         }
         return timeline;
     }
@@ -130,7 +131,7 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
             throw new DataProcessingException("Date is empty");
         }
         if (dataValidateService.isValidDate(dateInformation)) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
             timeline.setDate(LocalDate.parse(dateInformation, formatter));
         } else {
             throw new DataProcessingException("Date should have following format dd.MM.yyyy");
