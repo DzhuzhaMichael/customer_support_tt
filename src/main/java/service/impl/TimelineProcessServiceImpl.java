@@ -74,7 +74,7 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
 
     private Timeline processQuestionInformation(String questionInformation, Timeline timeline) {
         if (questionInformation.isEmpty()) {
-            throw new DataProcessingException("Question information is empty");
+            throw new DataProcessingException("Timeline question information is empty");
         }
         String[] questionArray = questionInformation.split(SIGN_TO_SPLIT_ELEMENT);
         if (questionArray.length == 1) {
@@ -83,7 +83,7 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
                 timeline.setCategoryId(DEFAULT_VALUE);
                 timeline.setSubCategoryId(DEFAULT_VALUE);
             } else {
-                throw new DataProcessingException("Question information may contain "
+                throw new DataProcessingException("Timeline question information may contain "
                         + "question_type_id (value from 1 to 10)");
             }
         } else if (questionArray.length == 2) {
@@ -93,7 +93,7 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
                 timeline.setCategoryId(Integer.parseInt(questionArray[QUESTION_CATEGORY_INDEX]));
                 timeline.setSubCategoryId(DEFAULT_VALUE);
             } else {
-                throw new DataProcessingException("Question information may contain question_type_id "
+                throw new DataProcessingException("Timeline question information may contain question_type_id "
                         + "(value from 1 to 10), category_id (value from 1 to 20)");
             }
         } else if (questionArray.length == 3) {
@@ -103,24 +103,24 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
                 timeline.setCategoryId(Integer.parseInt(questionArray[QUESTION_CATEGORY_INDEX]));
                 timeline.setSubCategoryId(Integer.parseInt(questionArray[QUESTION_SUBCATEGORY_INDEX]));
             } else {
-                throw new DataProcessingException("Question information may contain question_type_id "
+                throw new DataProcessingException("Timeline question information may contain question_type_id "
                         + "(value from 1 to 10), category_id (value from 1 to 20) and sub-category_id "
                         + "(value from 1 to 5)");
             }
         } else {
-            throw new DataProcessingException("Question information has invalid format");
+            throw new DataProcessingException("Timeline question information has invalid format");
         }
         return timeline;
     }
 
     private Timeline processResponseType(String responseTypeInformation, Timeline timeline) {
         if (responseTypeInformation.isEmpty()) {
-            throw new DataProcessingException("Response type is empty");
+            throw new DataProcessingException("Timeline response type is empty");
         }
         if (dataValidateService.isValidResponseType(responseTypeInformation)) {
             timeline.setResponseType(responseTypeInformation);
         } else {
-            throw new DataProcessingException("Response type should contain \"P\"(first answer) "
+            throw new DataProcessingException("Timeline response type should contain \"P\"(first answer) "
                     + "or \"N\"(next answer)");
         }
         return timeline;
@@ -128,25 +128,26 @@ public class TimelineProcessServiceImpl implements TimelineProcessService {
 
     private Timeline processDate(String dateInformation, Timeline timeline) {
         if (dateInformation.isEmpty()) {
-            throw new DataProcessingException("Date is empty");
+            throw new DataProcessingException("Timeline date is empty");
         }
         if (dataValidateService.isValidDate(dateInformation)) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
             timeline.setDate(LocalDate.parse(dateInformation, formatter));
         } else {
-            throw new DataProcessingException("Date should have following format dd.MM.yyyy");
+            throw new DataProcessingException("Timeline date should have following formats: dd.MM.yyyy/" +
+                    "d.MM.yyyy");
         }
         return timeline;
     }
 
     private Timeline processTime(String timeInformation, Timeline timeline) {
        if (timeInformation.isEmpty()) {
-           throw new DataProcessingException("Time is empty");
+           throw new DataProcessingException("Timeline time is empty");
        }
        if (dataValidateService.isValidTime(timeInformation)) {
            timeline.setTime(Integer.parseInt(timeInformation));
        } else {
-           throw new DataProcessingException("Time should be numeric value");
+           throw new DataProcessingException("Timeline time should be numeric value");
        }
        return timeline;
     }

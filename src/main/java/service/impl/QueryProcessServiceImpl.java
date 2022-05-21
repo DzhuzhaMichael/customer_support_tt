@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import exception.DataProcessingException;
 import model.Query;
-import model.Timeline;
 import service.DataValidateService;
 import service.QueryProcessService;
 
@@ -151,7 +150,7 @@ public class QueryProcessServiceImpl implements QueryProcessService {
                 query.setDateTo(LocalDate.parse(dateArray[DATE_DATE_FROM_INDEX], formatter));
             } else {
                 throw new DataProcessingException("Query date_from and date_to should have the following "
-                        + "format dd.MM.yyyy");
+                        + "formats: dd.MM.yyyy/d.MM.yyyy");
             }
         } else if (dateArray.length == 2) {
             if (dataValidateService.isValidDate(dateArray[DATE_DATE_FROM_INDEX])
@@ -160,7 +159,7 @@ public class QueryProcessServiceImpl implements QueryProcessService {
                 query.setDateTo(LocalDate.parse(dateArray[DATE_DATE_TO_INDEX], formatter));
             } else {
                 throw new DataProcessingException("Query date_from and date_to should have the following "
-                        + "format dd.MM.yyyy");
+                        + "format dd.MM.yyyy/d.MM.yyyy");
             }
         } else {
             throw new DataProcessingException("Query date information has invalid format");

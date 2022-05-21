@@ -3,9 +3,11 @@ import java.util.List;
 import exception.DataProcessingException;
 import model.Query;
 import model.Timeline;
+import service.DataAnalysisService;
 import service.QueryProcessService;
 import service.TimelineProcessService;
 import service.FileReaderService;
+import service.impl.DataAnalysisServiceImpl;
 import service.impl.QueryProcessServiceImpl;
 import service.impl.TimelineProcessServiceImpl;
 import service.impl.FileReaderServiceImpl;
@@ -19,12 +21,14 @@ public class MainApp {
             = new TimelineProcessServiceImpl();
     private static final QueryProcessService queryProcessService
             = new QueryProcessServiceImpl();
+    private static final DataAnalysisService dataAnalysisService
+            = new DataAnalysisServiceImpl();
 
     public static void main(String[] args) {
         List<String> rawDataFromFile = fileReaderService.read(SOURCE_FILE_PATH);
         List<Timeline> timelines = new ArrayList<>();
         List<Query> queries = new ArrayList<>();
-
+        List<String> analyticalResults = new ArrayList<>();
         for (int i = 1; i < rawDataFromFile.size(); i++) {
             if (rawDataFromFile.get(i).startsWith("C")) {
                 Timeline timeline = timelineProcessService.processTimeline(rawDataFromFile.get(i));
@@ -32,13 +36,16 @@ public class MainApp {
             } else if (rawDataFromFile.get(i).startsWith("D")) {
                 Query query = queryProcessService.processQuery(rawDataFromFile.get(i));
                 queries.add(query);
+                String result = dataAnalysisService.evaluate(timelines, queries);
+                analyticalResults.add(result);
             } else {
                 throw new DataProcessingException("Input line should starts with "
                         + "\"C\" or \"D\"");
             }
-
-            }
-
+        }
+        for (String element : analyticalResults) {
+            System.out.println(element);
+        }
     }
 }
 
