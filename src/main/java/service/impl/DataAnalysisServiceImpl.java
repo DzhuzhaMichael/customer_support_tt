@@ -19,7 +19,7 @@ public class DataAnalysisServiceImpl implements DataAnalysisService {
                 timeSum += timeline.getTime();
                 count++;
             }
-            }
+        }
         if (count != 0) {
             return String.valueOf(timeSum / count);
         } else {
@@ -28,7 +28,7 @@ public class DataAnalysisServiceImpl implements DataAnalysisService {
     }
 
     private boolean evaluateServiceInformation(Query query, Timeline timeline) {
-        return  ((query.getServiceId() == timeline.getServiceId()
+        return ((query.getServiceId() == timeline.getServiceId()
                 && query.getServiceVariationId() == timeline.getServiceVariationId())
                 || (query.getServiceId() == timeline.getServiceId()
                 && query.getServiceVariationId() == 0)

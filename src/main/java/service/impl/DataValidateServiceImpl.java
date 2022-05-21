@@ -3,8 +3,8 @@ package service.impl;
 import service.DataValidateService;
 
 public class DataValidateServiceImpl implements DataValidateService {
-    private static final String DATE_PATTERN = "^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[012])[-/.](19|20)\\d\\d$";
-    //private static final String DATE_PATTERN  = "^(0?[1-9]|[1|2]\\d|3[0|1])[./-](0?[1-9]|1[0-2])[./-](\\d{4}|\\d{2})$";
+    private static final String DATE_PATTERN
+            = "^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[012])[-/.](19|20)\\d\\d$";
 
     @Override
     public boolean isValidServiceInformation(String serviceId) {
@@ -19,7 +19,8 @@ public class DataValidateServiceImpl implements DataValidateService {
         if (serviceId.chars().allMatch(Character::isDigit)
                 && serviceId.chars().allMatch(Character::isDigit)) {
             return Integer.parseInt(serviceId) > 0 && Integer.parseInt(serviceId) <= 10
-                    && Integer.parseInt(serviceVariationId) > 0 && Integer.parseInt(serviceVariationId) <= 3;
+                    && Integer.parseInt(serviceVariationId) > 0
+                    && Integer.parseInt(serviceVariationId) <= 3;
         }
         return false;
     }
@@ -43,7 +44,8 @@ public class DataValidateServiceImpl implements DataValidateService {
     }
 
     @Override
-    public boolean isValidQuestionInformation(String questionTypeId, String categoryId, String subCategoryId) {
+    public boolean isValidQuestionInformation(String questionTypeId, String categoryId,
+                                              String subCategoryId) {
         if (questionTypeId.chars().allMatch(Character::isDigit)
                 && categoryId.chars().allMatch(Character::isDigit)
                 && subCategoryId.chars().allMatch(Character::isDigit)) {

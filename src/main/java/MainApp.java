@@ -1,16 +1,16 @@
+import exception.DataProcessingException;
 import java.util.ArrayList;
 import java.util.List;
-import exception.DataProcessingException;
 import model.Query;
 import model.Timeline;
 import service.DataAnalysisService;
+import service.FileReaderService;
 import service.QueryProcessService;
 import service.TimelineProcessService;
-import service.FileReaderService;
 import service.impl.DataAnalysisServiceImpl;
+import service.impl.FileReaderServiceImpl;
 import service.impl.QueryProcessServiceImpl;
 import service.impl.TimelineProcessServiceImpl;
-import service.impl.FileReaderServiceImpl;
 
 public class MainApp {
     private static final String SOURCE_FILE_PATH

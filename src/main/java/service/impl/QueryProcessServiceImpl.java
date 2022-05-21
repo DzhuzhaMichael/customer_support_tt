@@ -1,8 +1,8 @@
 package service.impl;
 
+import exception.DataProcessingException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import exception.DataProcessingException;
 import model.Query;
 import service.DataValidateService;
 import service.QueryProcessService;
@@ -29,8 +29,8 @@ public class QueryProcessServiceImpl implements QueryProcessService {
         for (int i = 0; i < dataArray.length; i++) {
             switch (i) {
                 case 0:
-                   processServiceInformation(dataArray[i], query);
-                   continue;
+                    processServiceInformation(dataArray[i], query);
+                    continue;
                 case 1:
                     processQuestionInformation(dataArray[i], query);
                     continue;
@@ -40,8 +40,8 @@ public class QueryProcessServiceImpl implements QueryProcessService {
                 case 3:
                     processDate(dataArray[i], query);
                     continue;
-                }
             }
+        }
         return query;
     }
 
@@ -60,17 +60,19 @@ public class QueryProcessServiceImpl implements QueryProcessService {
                 query.setServiceId(Integer.parseInt(serviceArray[SERVICE_ID_INDEX]));
                 query.setServiceVariationId(DEFAULT_VALUE);
             } else {
-                throw new DataProcessingException("Query service information should contain service_id "
-                        + "(value from 1 to 10) or \"*\"");
+                throw new DataProcessingException("Query service information should contain "
+                        + "service_id (value from 1 to 10) or \"*\"");
             }
         } else if (serviceArray.length == 2) {
             if (dataValidateService.isValidServiceInformation(serviceArray[SERVICE_ID_INDEX],
                     serviceArray[SERVICE_VARIATION_INDEX])) {
                 query.setServiceId(Integer.parseInt(serviceArray[SERVICE_ID_INDEX]));
-                query.setServiceVariationId(Integer.parseInt(serviceArray[SERVICE_VARIATION_INDEX]));
+                query.setServiceVariationId(Integer.parseInt(
+                        serviceArray[SERVICE_VARIATION_INDEX]));
             } else {
-                throw new DataProcessingException("Query service information should contain service_id "
-                        + "(value from 1 to 10) and service_variation_id(value from 1 to 3) or \"*\"");
+                throw new DataProcessingException("Query service information should contain "
+                        + "service_id (value from 1 to 10) and service_variation_id"
+                        + "(value from 1 to 3) or \"*\"");
             }
         } else {
             throw new DataProcessingException("Query service information has invalid format");
@@ -90,7 +92,8 @@ public class QueryProcessServiceImpl implements QueryProcessService {
         }
         String[] questionArray = questionInformation.split(SIGN_TO_SPLIT_ELEMENT);
         if (questionArray.length == 1) {
-            if (dataValidateService.isValidQuestionInformation(questionArray[QUESTION_TYPE_INDEX])) {
+            if (dataValidateService.isValidQuestionInformation(
+                    questionArray[QUESTION_TYPE_INDEX])) {
                 query.setQuestionTypeId(Integer.parseInt(questionArray[QUESTION_TYPE_INDEX]));
                 query.setCategoryId(DEFAULT_VALUE);
                 query.setSubCategoryId(DEFAULT_VALUE);
@@ -105,18 +108,22 @@ public class QueryProcessServiceImpl implements QueryProcessService {
                 query.setCategoryId(Integer.parseInt(questionArray[QUESTION_CATEGORY_INDEX]));
                 query.setSubCategoryId(DEFAULT_VALUE);
             } else {
-                throw new DataProcessingException("Query question information may contain question_type_id "
-                        + "(value from 1 to 10), category_id (value from 1 to 20) or \"*\"");
+                throw new DataProcessingException("Query question information may contain "
+                        + "question_type_id (value from 1 to 10), category_id "
+                        + "(value from 1 to 20) or \"*\"");
             }
         } else if (questionArray.length == 3) {
-            if (dataValidateService.isValidQuestionInformation(questionArray[QUESTION_TYPE_INDEX],
-                    questionArray[QUESTION_CATEGORY_INDEX], questionArray[QUESTION_SUBCATEGORY_INDEX])) {
+            if (dataValidateService.isValidQuestionInformation(
+                    questionArray[QUESTION_TYPE_INDEX],
+                    questionArray[QUESTION_CATEGORY_INDEX],
+                    questionArray[QUESTION_SUBCATEGORY_INDEX])) {
                 query.setQuestionTypeId(Integer.parseInt(questionArray[QUESTION_TYPE_INDEX]));
                 query.setCategoryId(Integer.parseInt(questionArray[QUESTION_CATEGORY_INDEX]));
                 query.setSubCategoryId(Integer.parseInt(questionArray[QUESTION_SUBCATEGORY_INDEX]));
             } else {
-                throw new DataProcessingException("Query question information may contain question_type_id "
-                        + "(value from 1 to 10), category_id (value from 1 to 20) and sub-category_id "
+                throw new DataProcessingException("Query question information may contain "
+                        + "question_type_id (value from 1 to 10), category_id "
+                        + "(value from 1 to 20) and sub-category_id "
                         + "(value from 1 to 5) or \"*\"");
             }
         } else {
@@ -132,8 +139,8 @@ public class QueryProcessServiceImpl implements QueryProcessService {
         if (dataValidateService.isValidResponseType(responseTypeInformation)) {
             query.setResponseType(responseTypeInformation);
         } else {
-            throw new DataProcessingException("Query response type should contain \"P\"(first answer) "
-                    + "or \"N\"(next answer)");
+            throw new DataProcessingException("Query response type should contain \"P\""
+                    + "(first answer) or \"N\"(next answer)");
         }
         return query;
     }
@@ -149,8 +156,8 @@ public class QueryProcessServiceImpl implements QueryProcessService {
                 query.setDateFrom(LocalDate.parse(dateArray[DATE_DATE_FROM_INDEX], formatter));
                 query.setDateTo(LocalDate.parse(dateArray[DATE_DATE_FROM_INDEX], formatter));
             } else {
-                throw new DataProcessingException("Query date_from and date_to should have the following "
-                        + "formats: dd.MM.yyyy/d.MM.yyyy");
+                throw new DataProcessingException("Query date_from and date_to should have the "
+                        + "following formats: dd.MM.yyyy/d.MM.yyyy");
             }
         } else if (dateArray.length == 2) {
             if (dataValidateService.isValidDate(dateArray[DATE_DATE_FROM_INDEX])
@@ -158,8 +165,8 @@ public class QueryProcessServiceImpl implements QueryProcessService {
                 query.setDateFrom(LocalDate.parse(dateArray[DATE_DATE_FROM_INDEX], formatter));
                 query.setDateTo(LocalDate.parse(dateArray[DATE_DATE_TO_INDEX], formatter));
             } else {
-                throw new DataProcessingException("Query date_from and date_to should have the following "
-                        + "format dd.MM.yyyy/d.MM.yyyy");
+                throw new DataProcessingException("Query date_from and date_to should have the "
+                        + "following format dd.MM.yyyy/d.MM.yyyy");
             }
         } else {
             throw new DataProcessingException("Query date information has invalid format");

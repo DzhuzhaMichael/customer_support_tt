@@ -9,13 +9,12 @@ public interface DataValidateService {
 
     boolean isValidQuestionInformation(String questionTypeId, String categoryId);
 
-    boolean isValidQuestionInformation(String questionTypeId, String categoryId, String subCategoryId);
+    boolean isValidQuestionInformation(String questionTypeId, String categoryId,
+                                       String subCategoryId);
 
     boolean isValidResponseType(String responseTypeInformation);
 
     boolean isValidDate(String dateInformation);
 
     boolean isValidTime(String timeInformation);
-
-
 }

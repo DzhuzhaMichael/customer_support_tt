@@ -10,7 +10,7 @@ public class FileReaderServiceImpl implements FileReaderService {
     @Override
     public List<String> read(String sourceFilePath) {
         try {
-         return Files.readAllLines(Paths.get(sourceFilePath));
+            return Files.readAllLines(Paths.get(sourceFilePath));
         } catch (IOException e) {
             throw new RuntimeException("Can`t read file by the path "
             + sourceFilePath, e);
